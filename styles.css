@@ -51,46 +51,48 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0B1220;
-    --surface: #111B2E;
-    --surface-2: #17243A;
-    --text: #E8F0F7;
-    --text-muted: #9AA8BC;
-    --primary: #22C55E;
-    --primary-soft: rgb(34 197 94 / 0.14);
-    --primary-contrast: #052E16;
-    --accent: #38BDF8;
-    --success: #34D399;
-    --warning: #FBBF24;
-    --danger: #F87171;
-    --border: #22314A;
-    --gold: #FBBF24;
-    --rose: #F472B6;
+/* data-theme, index.html'deki başlangıç betiğinde sistem ayarına veya kullanıcının seçimine göre atanır. */
+:root[data-theme="dark"] {
+  --bg: #0B1220;
+  --surface: #111B2E;
+  --surface-2: #17243A;
+  --text: #E8F0F7;
+  --text-muted: #9AA8BC;
+  --primary: #22C55E;
+  --primary-soft: rgb(34 197 94 / 0.14);
+  --primary-contrast: #052E16;
+  --accent: #38BDF8;
+  --success: #34D399;
+  --warning: #FBBF24;
+  --danger: #F87171;
+  --border: #22314A;
+  --gold: #FBBF24;
+  --rose: #F472B6;
 
-    --sky-1: #1E1B4B;
-    --sky-2: #5B3A8C;
-    --sky-3: #F59E6B;
-    --sun: #FDBA74;
-    --hill-1: #1F2F52;
-    --hill-2: #14532D;
-    --hill-3: #0F3D24;
-    --leaf-1: #4ADE80;
-    --leaf-2: #22C55E;
-    --hero-text: #F8FAFC;
-    --timer: #4ADE80;
-    --timer-shadow: 0 2px 12px rgb(0 0 0 / 0.25);
+  --sky-1: #1E1B4B;
+  --sky-2: #5B3A8C;
+  --sky-3: #F59E6B;
+  --sun: #FDBA74;
+  --hill-1: #1F2F52;
+  --hill-2: #14532D;
+  --hill-3: #0F3D24;
+  --leaf-1: #4ADE80;
+  --leaf-2: #22C55E;
+  --hero-text: #F8FAFC;
+  --timer: #4ADE80;
+  --timer-shadow: 0 2px 12px rgb(0 0 0 / 0.25);
 
-    --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
-    --shadow-2: 0 16px 40px rgb(0 0 0 / 0.55);
-    color-scheme: dark;
-  }
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-2: 0 16px 40px rgb(0 0 0 / 0.55);
+  color-scheme: dark;
 }
 
 /* ===== Temel ===== */
 * { box-sizing: border-box; }
 html, body { margin: 0; }
+/* Hızlı art arda dokunuşlarda (ör. artı/eksi) iOS'un çift dokunuşla yakınlaştırmasını kapatır; iki parmakla yakınlaştırma çalışmaya devam eder. */
+html, button, a, label, input, textarea { touch-action: manipulation; }
+button { -webkit-user-select: none; user-select: none; }
 body {
   min-height: 100dvh;
   background: var(--bg);
@@ -454,6 +456,27 @@ textarea {
 .row-sub { font-size: 13px; color: var(--text-muted); }
 .danger-row { border-color: color-mix(in srgb, var(--danger) 40%, var(--border)); }
 .danger-row, .danger-row > .i { color: var(--danger); }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.segmented {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-1);
+  margin: 0; padding: var(--space-1);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.segmented label { cursor: pointer; }
+.segmented input { position: absolute; opacity: 0; pointer-events: none; }
+.segmented span {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font: 500 14px var(--font-body);
+}
+.segmented .i { width: 18px; height: 18px; }
+.segmented input:checked + span { background: var(--primary-soft); color: var(--primary); font-weight: 600; }
+.segmented input:focus-visible + span { outline: 2px solid var(--primary); outline-offset: 2px; }
 
 .switch {
   appearance: none;

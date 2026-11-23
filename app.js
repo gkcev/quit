@@ -19,7 +19,7 @@ const timeOnly = new Intl.DateTimeFormat('tr-TR', { hour: '2-digit', minute: '2-
 // ===== Durum =====
 
 function emptyState() {
-  return { profile: null, cravings: [], announced: {}, notifications: false };
+  return { profile: null, cravings: [], announced: {}, notifications: false, theme: 'system' };
 }
 
 function load() {
@@ -304,8 +304,28 @@ function renderSettings() {
       <span class="row-body"><span>${label}</span><span class="row-sub">${value}</span></span>
       ${icon('chevron-right', 'chev')}
     </button>`).join('');
+  $(`#theme-picker input[value="${state.theme}"]`).checked = true;
   renderNotifications();
 }
+
+// ===== Tema =====
+
+const systemDark = matchMedia('(prefers-color-scheme: dark)');
+
+// İlk uygulama index.html'deki satır içi betikte; bu, sonraki değişiklikler için.
+function applyTheme() {
+  const dark = state.theme === 'dark' || (state.theme === 'system' && systemDark.matches);
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  $('meta[name="theme-color"]').content = dark ? '#0B1220' : '#F7FAF8';
+}
+
+systemDark.addEventListener('change', applyTheme);
+
+$('#theme-picker').addEventListener('change', (e) => {
+  state.theme = e.target.value;
+  save();
+  applyTheme();
+});
 
 function renderNotifications() {
   const toggle = $('#notif-toggle');
