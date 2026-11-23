@@ -33,3 +33,17 @@ Ardından `http://localhost:5173` adresini aç. GitHub Pages'te de olduğu gibi 
 ## Bildirimler hakkında
 
 Bildirimler rozet ya da kilometre taşı kazanıldığında uygulama açıkken veya arka plandayken gösterilir. Uygulama tamamen kapalıyken zamanlanmış bildirim göndermek bir push sunucusu gerektirir; şu an yok. iPhone'da bildirimler için uygulamanın önce "Ana Ekrana Ekle" ile yüklenmesi gerekir.
+
+## Mesaj gönderme
+
+`messages.json` dosyasına eklenen her mesaj, uygulama açıldığında (ya da arka plandan dönüldüğünde) ekranda bir kez gösterilir. GitHub'da dosyayı düzenleyip kaydetmek yeterli; 1-2 dakika içinde yayına girer.
+
+```json
+[
+  { "id": "1", "text": "Bugün de sigara yok, helal olsun!", "from": "Ben", "emoji": "🏆" }
+]
+```
+
+- `id` her mesaj için farklı olmalı; aynı `id` ikinci kez gösterilmez.
+- `from` ve `emoji` isteğe bağlı.
+- Repo herkese açık olduğu için mesajları linki bilen herkes görebilir.

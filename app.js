@@ -680,12 +680,59 @@ $('#undo-slip').addEventListener('click', () => {
   toast('check', 'Geri alındı', 'Sayacın ve rozetlerin eski haline döndü.');
 });
 
+// ===== Gelen mesajlar =====
+// messages.json'a eklenen her mesaj, uygulama açılınca bir kez gösterilir.
+
+const messageDialog = $('#message');
+let messageQueue = [];
+
+async function checkMessages() {
+  if (!state.profile) return;
+  try {
+    const res = await fetch('messages.json', { cache: 'no-store' });
+    if (!res.ok) return;
+    const list = await res.json();
+    if (!Array.isArray(list)) return;
+    const seen = new Set(state.seenMessages ?? []);
+    const queued = new Set(messageQueue.map((m) => m.id));
+    for (const m of list) {
+      if (m?.id && m.text && !seen.has(m.id) && !queued.has(m.id)) messageQueue.push(m);
+    }
+    showNextMessage();
+  } catch {
+    // Çevrimdışıyken ya da dosya bozuksa sessizce geç.
+  }
+}
+
+function showNextMessage() {
+  if (messageDialog.open || $('#celebrate').open || craving.open) return;
+  const m = messageQueue.shift();
+  if (!m) return;
+  $('#message-emoji').textContent = m.emoji || '💌';
+  $('#message-text').textContent = m.text;
+  $('#message-from').textContent = m.from ? `— ${m.from}` : '';
+  $('#message-from').hidden = !m.from;
+  state.seenMessages = [...(state.seenMessages ?? []), m.id];
+  save();
+  messageDialog.showModal();
+}
+
+messageDialog.addEventListener('close', showNextMessage);
+$('#celebrate').addEventListener('close', showNextMessage);
+craving.addEventListener('close', showNextMessage);
+
+// Arka plandan geri dönünce de bak (telefonda uygulama genelde kapanmaz, arka plana atılır).
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') checkMessages();
+});
+
 // ===== Başlangıç =====
 
 function showApp() {
   onboarding.hidden = true;
   $('#app').hidden = false;
   showView(location.hash.slice(1));
+  checkMessages();
 }
 
 function tick() {
