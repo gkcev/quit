@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Quit — Sigarayı Bırak</title>
+  <meta name="description" content="Sigarayı bırakma yolculuğunda yanında.">
+  <meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F7FAF8" media="(prefers-color-scheme: light)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <!-- İkon seti (Lucide tarzı, 24px çizgi ikonlar) ve manzara illüstrasyonu -->
+  <svg class="sprite" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" style="stop-color: var(--sky-1)"/>
+        <stop offset=".55" style="stop-color: var(--sky-2)"/>
+        <stop offset="1" style="stop-color: var(--sky-3)"/>
+      </linearGradient>
+      <radialGradient id="sun" cx=".5" cy=".5" r=".5">
+        <stop offset="0" style="stop-color: var(--sun)"/>
+        <stop offset="1" style="stop-color: var(--sun); stop-opacity: 0"/>
+      </radialGradient>
+      <linearGradient id="hex" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#FDE68A"/>
+        <stop offset="1" stop-color="#D97706"/>
+      </linearGradient>
+    </defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="M9 7h6"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-cigarette" viewBox="0 0 24 24"><path d="M2 13h14v4H2z"/><path d="M18 13h4v4h-4"/><path d="M18 9c0-2.5-2-2.5-2-5M22 9c0-2.5-2-2.5-2-5"/></symbol>
+    <symbol id="i-banknote" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></symbol>
+    <symbol id="i-package" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5M12 3v12"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+    <symbol id="i-lungs" viewBox="0 0 24 24"><path d="M12 3v8m0 0-3 2.5m3-2.5 3 2.5"/><path d="M8.5 7C6 7 3 11 3 16c0 2.5 1.5 4 3.5 4S10 18.5 10 16V9.5C10 8 9.5 7 8.5 7z"/><path d="M15.5 7c2.5 0 5.5 4 5.5 9 0 2.5-1.5 4-3.5 4S14 18.5 14 16V9.5C14 8 14.5 7 15.5 7z"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M8 17v-5M13 17V8M18 17v-9"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+
+    <!-- Filiz: dolgu ikonu -->
+    <symbol id="sprout" viewBox="0 0 64 64">
+      <path d="M33 58c-1-12 1-22 9-30 7-6 15-8 19-7-1 10-5 19-13 24-5 4-10 6-15 13z" style="fill: var(--leaf-1)"/>
+      <path d="M30 58c-1-9-5-16-12-20-5-3-11-4-15-3 1 8 5 14 11 18 5 3 10 4 16 5z" style="fill: var(--leaf-2)"/>
+      <rect x="29" y="40" width="4" height="20" rx="2" style="fill: var(--leaf-2)"/>
+    </symbol>
+
+    <!-- Gün doğumunda tepeler -->
+    <symbol id="hero" viewBox="0 0 400 240" preserveAspectRatio="xMidYMax slice">
+      <rect width="400" height="240" fill="url(#sky)"/>
+      <circle cx="270" cy="150" r="90" fill="url(#sun)"/>
+      <path d="M0 160c60-30 120-40 190-22s130 10 210-18v120H0z" style="fill: var(--hill-1)"/>
+      <path d="M0 190c70-24 150-24 220-6s120 8 180-10v66H0z" style="fill: var(--hill-2)"/>
+      <path d="M0 214c90-18 200-16 280-2 50 8 90 4 120-4v32H0z" style="fill: var(--hill-3)"/>
+    </symbol>
+  </svg>
+
+  <!-- Paylaşılan form alanları: kurulum ve ayarlar -->
+  <template id="tpl-date">
+    <label class="input-card">
+      <svg class="i"><use href="#i-calendar"/></svg>
+      <span class="input-body"><span class="input-label">Tarih</span><input name="quitDate" type="date" required></span>
+    </label>
+    <label class="input-card">
+      <svg class="i"><use href="#i-clock"/></svg>
+      <span class="input-body"><span class="input-label">Saat</span><input name="quitTime" type="time" required></span>
+    </label>
+  </template>
+  <template id="tpl-habits">
+    <div class="input-card stepper">
+      <svg class="i"><use href="#i-cigarette"/></svg>
+      <span class="input-body">
+        <label class="input-label" for="f-perDay">Günde kaç sigara içiyordun?</label>
+        <span class="stepper-row">
+          <button type="button" class="step-btn" data-step-by="-1" aria-label="Azalt"><svg class="i"><use href="#i-minus"/></svg></button>
+          <input id="f-perDay" name="perDay" type="number" inputmode="numeric" min="1" max="200" required>
+          <button type="button" class="step-btn" data-step-by="1" aria-label="Artır"><svg class="i"><use href="#i-plus"/></svg></button>
+        </span>
+      </span>
+    </div>
+    <div class="input-card stepper">
+      <svg class="i"><use href="#i-banknote"/></svg>
+      <span class="input-body">
+        <label class="input-label" for="f-packPrice">Paket fiyatı (₺)</label>
+        <span class="stepper-row">
+          <button type="button" class="step-btn" data-step-by="-5" aria-label="Azalt"><svg class="i"><use href="#i-minus"/></svg></button>
+          <input id="f-packPrice" name="packPrice" type="number" inputmode="decimal" min="1" step="0.01" placeholder="ör. 100" required>
+          <button type="button" class="step-btn" data-step-by="5" aria-label="Artır"><svg class="i"><use href="#i-plus"/></svg></button>
+        </span>
+      </span>
+    </div>
+    <div class="input-card stepper">
+      <svg class="i"><use href="#i-package"/></svg>
+      <span class="input-body">
+        <label class="input-label" for="f-perPack">Pakette kaç sigara var?</label>
+        <span class="stepper-row">
+          <button type="button" class="step-btn" data-step-by="-1" aria-label="Azalt"><svg class="i"><use href="#i-minus"/></svg></button>
+          <input id="f-perPack" name="perPack" type="number" inputmode="numeric" min="1" max="100" required>
+          <button type="button" class="step-btn" data-step-by="1" aria-label="Artır"><svg class="i"><use href="#i-plus"/></svg></button>
+        </span>
+      </span>
+    </div>
+  </template>
+
+  <!-- ===== Kurulum ===== -->
+  <form id="onboarding" class="onboarding" hidden novalidate>
+    <section data-ob="0" class="ob-welcome">
+      <svg class="hero-art"><use href="#hero"/></svg>
+      <div class="logo ob-logo"><svg class="logo-mark"><use href="#sprout"/></svg>Quit</div>
+      <div class="ob-welcome-body">
+        <h1 class="display">Yeni bir nefes için hazır mısın?</h1>
+        <p class="muted">Sigarayı bırakma yolculuğunda yanındayız. Küçük adımlarla, daha özgür bir sen mümkün.</p>
+        <button class="btn btn-primary" type="button" data-ob-next>Başlayalım <svg class="i"><use href="#i-arrow-right"/></svg></button>
+        <div class="dots" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+      </div>
+    </section>
+
+    <section data-ob="1" class="ob-step" hidden>
+      <div class="ob-top">
+        <button type="button" class="icon-btn" data-ob-back aria-label="Geri"><svg class="i"><use href="#i-arrow-left"/></svg></button>
+        <span class="muted small">1 / 2</span>
+        <span class="icon-btn-spacer"></span>
+      </div>
+      <div class="progress"><div class="progress-bar" style="width:50%"></div></div>
+      <h1>Bırakma tarihini belirleyelim</h1>
+      <p class="muted">Sigarayı bırakmak istediğin tarihi ve saati seç.</p>
+      <div class="stack" data-tpl="tpl-date"></div>
+      <p class="note"><svg class="i"><use href="#i-info"/></svg>Tarihi bugün seçebilir ya da kendine hazırlanman için ileriki bir tarih belirleyebilirsin.</p>
+      <button class="btn btn-primary push" type="button" data-ob-next>Devam et</button>
+    </section>
+
+    <section data-ob="2" class="ob-step" hidden>
+      <div class="ob-top">
+        <button type="button" class="icon-btn" data-ob-back aria-label="Geri"><svg class="i"><use href="#i-arrow-left"/></svg></button>
+        <span class="muted small">2 / 2</span>
+        <span class="icon-btn-spacer"></span>
+      </div>
+      <div class="progress"><div class="progress-bar" style="width:100%"></div></div>
+      <h1>Birkaç bilgi daha</h1>
+      <p class="muted">Sana özel hesaplamalar yapabilmemiz için günlük alışkanlığını ve maliyeti öğrenelim. Veriler sadece bu cihazda kalır.</p>
+      <div class="stack" data-tpl="tpl-habits"></div>
+      <button class="btn btn-primary push" type="submit">Quit'e başla <svg class="i"><use href="#i-check"/></svg></button>
+    </section>
+  </form>
+
+  <!-- ===== Uygulama ===== -->
+  <div id="app" class="app" hidden>
+    <main>
+      <section data-view="home" class="view">
+        <header class="topbar">
+          <div class="logo"><svg class="logo-mark"><use href="#sprout"/></svg>Quit</div>
+          <a class="icon-btn" href="#settings" aria-label="Bildirim ayarları"><svg class="i"><use href="#i-bell"/></svg></a>
+        </header>
+
+        <div class="hero">
+          <svg class="hero-art"><use href="#hero"/></svg>
+          <svg class="hero-sprout" aria-hidden="true"><use href="#sprout"/></svg>
+          <div class="hero-body">
+            <p class="hero-label" id="timer-label">Sigarasız geçen süre</p>
+            <p class="timer" id="timer"><span id="timer-1"></span><span id="timer-2"></span></p>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="card stat">
+            <span class="stat-icon"><svg class="i"><use href="#i-leaf"/></svg></span>
+            <span class="stat-label">İçilmeyen sigara</span>
+            <span class="stat-value" id="stat-cigs">0</span>
+          </div>
+          <div class="card stat">
+            <span class="stat-icon gold"><svg class="i"><use href="#i-coins"/></svg></span>
+            <span class="stat-label">Tasarruf</span>
+            <span class="stat-value" id="stat-money">₺0</span>
+          </div>
+          <div class="card stat">
+            <span class="stat-icon rose"><svg class="i"><use href="#i-heart"/></svg></span>
+            <span class="stat-label">Geri kazanılan ömür</span>
+            <span class="stat-value" id="stat-life">0 dk</span>
+          </div>
+        </div>
+
+        <h2 class="section-title" id="next-title">Sıradaki sağlık kilometre taşı</h2>
+        <a class="card next-ms" id="next-ms" href="#health"></a>
+
+        <button class="btn btn-craving" id="craving-btn" type="button">
+          <svg class="i"><use href="#i-wind"/></svg> Canım çekiyor
+        </button>
+      </section>
+
+      <section data-view="health" class="view" hidden>
+        <header class="view-header">
+          <h1>Sağlık</h1>
+          <p class="muted">Sigarayı bıraktıktan sonra vücudunda neler değişiyor?</p>
+        </header>
+        <ol class="timeline" id="timeline"></ol>
+        <p class="footnote">Genel bilgilendirme amaçlıdır; WHO ve ACS kaynaklarına dayanır, tıbbi tavsiye değildir.</p>
+      </section>
+
+      <section data-view="badges" class="view" hidden>
+        <header class="view-header">
+          <h1>Rozetler</h1>
+          <p class="muted" id="badge-summary"></p>
+        </header>
+        <div class="chips" id="badge-filter" role="tablist"></div>
+        <div id="badge-groups"></div>
+      </section>
+
+      <section data-view="log" class="view" hidden>
+        <header class="view-header"><h1>Günlük</h1></header>
+        <div class="card summary" id="log-summary"></div>
+        <h2 class="section-title">Kriz geçmişi</h2>
+        <ul class="log-list" id="log-list"></ul>
+      </section>
+
+      <section data-view="settings" class="view" hidden>
+        <header class="view-header"><h1>Ayarlar</h1></header>
+
+        <h2 class="section-title">Bırakma planı</h2>
+        <div class="card list" id="plan-list"></div>
+
+        <h2 class="section-title">Bildirimler</h2>
+        <div class="card list">
+          <label class="row">
+            <svg class="i"><use href="#i-bell"/></svg>
+            <span class="row-body"><span>Rozet ve sağlık bildirimleri</span><span class="row-sub" id="notif-status"></span></span>
+            <input type="checkbox" class="switch" id="notif-toggle">
+          </label>
+        </div>
+
+        <h2 class="section-title">Veri</h2>
+        <div class="card list">
+          <button class="row" id="export-btn" type="button">
+            <svg class="i"><use href="#i-download"/></svg>
+            <span class="row-body">Verileri dışa aktar (JSON)</span>
+            <svg class="i chev"><use href="#i-chevron-right"/></svg>
+          </button>
+          <label class="row">
+            <svg class="i"><use href="#i-upload"/></svg>
+            <span class="row-body">Verileri içe aktar (JSON)</span>
+            <svg class="i chev"><use href="#i-chevron-right"/></svg>
+            <input type="file" id="import-input" accept="application/json" hidden>
+          </label>
+        </div>
+        <button class="card row danger-row" id="reset-btn" type="button">
+          <svg class="i"><use href="#i-trash"/></svg>
+          <span class="row-body"><span>Tüm verileri sıfırla</span><span class="row-sub">Tüm ilerlemen, kayıtların ve ayarların silinir.</span></span>
+        </button>
+      </section>
+    </main>
+
+    <nav class="tabbar" aria-label="Ana gezinme">
+      <a href="#" data-tab="home"><svg class="i"><use href="#i-home"/></svg>Ana sayfa</a>
+      <a href="#health" data-tab="health"><svg class="i"><use href="#i-heart"/></svg>Sağlık</a>
+      <a href="#badges" data-tab="badges"><svg class="i"><use href="#i-star"/></svg>Rozetler</a>
+      <a href="#log" data-tab="log"><svg class="i"><use href="#i-book"/></svg>Günlük</a>
+      <a href="#settings" data-tab="settings"><svg class="i"><use href="#i-settings"/></svg>Ayarlar</a>
+    </nav>
+  </div>
+
+  <!-- ===== Kriz anı ===== -->
+  <dialog id="craving" class="sheet full">
+    <form id="craving-form" data-step="breathe" class="sheet-body" novalidate>
+      <div class="sheet-head">
+        <h2>Canın mı çekiyor?</h2>
+        <button type="button" class="icon-btn" data-close aria-label="Kapat"><svg class="i"><use href="#i-x"/></svg></button>
+      </div>
+      <p class="muted center-text">Sakinleş, dikkatini başka yöne çevir ve bu anı birlikte atlatalım.</p>
+
+      <div class="breath">
+        <div class="breath-glow" id="breath-glow"></div>
+        <svg class="breath-ring" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="54" class="ring-bg"/>
+          <circle cx="60" cy="60" r="54" class="ring-fg" id="breath-ring" pathLength="100"/>
+        </svg>
+        <div class="breath-text" aria-live="polite">
+          <strong id="breath-label">Nefes al</strong>
+          <span id="breath-count" class="muted"></span>
+        </div>
+      </div>
+
+      <div class="breath-progress">
+        <div class="progress"><div class="progress-bar" id="breath-progress"></div></div>
+        <span class="muted small tabular" id="breath-time">00:00 / 01:00</span>
+      </div>
+
+      <button type="button" class="card tip" id="tip-next">
+        <svg class="i tip-icon"><use href="#i-bulb"/></svg>
+        <span class="tip-body"><strong>Küçük bir öneri</strong><span class="muted" id="tip-text"></span></span>
+        <svg class="i chev"><use href="#i-chevron-right"/></svg>
+      </button>
+
+      <details class="card log-details">
+        <summary>Bu anı kaydet <svg class="i chev"><use href="#i-chevron-down"/></svg></summary>
+        <div class="stack">
+          <fieldset class="field">
+            <legend>İstek şiddeti</legend>
+            <div class="scale">
+              <label><input type="radio" name="intensity" value="1"><span>1</span></label>
+              <label><input type="radio" name="intensity" value="2"><span>2</span></label>
+              <label><input type="radio" name="intensity" value="3" checked><span>3</span></label>
+              <label><input type="radio" name="intensity" value="4"><span>4</span></label>
+              <label><input type="radio" name="intensity" value="5"><span>5</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="field">
+            <legend>Tetikleyici <span class="muted small">(birden fazla seçilebilir)</span></legend>
+            <div class="chips" id="triggers"></div>
+          </fieldset>
+          <label class="field">
+            <span class="legend">Not <span class="muted small">(isteğe bağlı)</span></span>
+            <textarea name="note" rows="3" maxlength="200" placeholder="Bu isteği ne tetikledi? Nasıl atlattın?"></textarea>
+            <span class="muted small counter" id="note-count">0 / 200</span>
+          </label>
+        </div>
+      </details>
+
+      <div class="btn-pair">
+        <button class="btn btn-primary" name="outcome" value="resisted" type="submit">Atlattım 💪</button>
+        <button class="btn btn-secondary" name="outcome" value="slipped" type="submit">İçtim</button>
+      </div>
+    </form>
+
+    <div data-step="slip" class="sheet-body slip" hidden>
+      <div class="sheet-head">
+        <span></span>
+        <button type="button" class="icon-btn" data-close aria-label="Kapat"><svg class="i"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="slip-art">
+        <svg class="hero-art"><use href="#hero"/></svg>
+        <svg class="slip-sprout" aria-hidden="true"><use href="#sprout"/></svg>
+      </div>
+      <h2 class="display center-text">Bir kayma, yolculuğun sonu değil</h2>
+      <p class="muted center-text">Herkesin yolculuğunda zor anlar olabilir. Önemli olan, pes etmeden devam etmek. Bu deneyimden öğrenip daha güçlü dönebilirsin. 💚</p>
+      <p class="card note center-text">Sayacın, tasarrufun ve rozetlerin şimdiden itibaren yeniden başladı. Kriz günlüğün duruyor; tetikleyicilerini tanımana yardım edecek.</p>
+      <div class="stack push">
+        <button class="btn btn-primary" data-close type="button">Yeniden başla <svg class="i"><use href="#i-leaf"/></svg></button>
+        <button class="btn btn-outline" id="undo-slip" type="button">Yanlışlıkla bastım, geri al</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ===== Rozet kutlaması ===== -->
+  <dialog id="celebrate" class="sheet celebrate">
+    <div class="sheet-body center-text">
+      <div class="confetti" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <svg class="hex" viewBox="0 0 120 130" aria-hidden="true">
+        <path d="M60 4 112 34v62L60 126 8 96V34z" fill="url(#hex)"/>
+        <path d="M60 16 102 40v50L60 114 18 90V40z" style="fill: var(--primary)"/>
+        <use href="#sprout" x="30" y="30" width="60" height="60" style="--leaf-1: #FFFFFF; --leaf-2: #DCFCE7"/>
+      </svg>
+      <h2 class="display">Tebrikler! 🎉</h2>
+      <p class="celebrate-title" id="celebrate-title"></p>
+      <p class="muted" id="celebrate-text"></p>
+      <button class="btn btn-primary" type="button" data-close>Süper <svg class="i"><use href="#i-check"/></svg></button>
+    </div>
+  </dialog>
+
+  <!-- ===== Ayar düzenleme ===== -->
+  <dialog id="edit" class="sheet">
+    <form id="edit-form" class="sheet-body" novalidate>
+      <div class="sheet-head">
+        <h2>Bırakma planı</h2>
+        <button type="button" class="icon-btn" data-close aria-label="Kapat"><svg class="i"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="stack" data-tpl="tpl-date"></div>
+      <div class="stack" data-tpl="tpl-habits"></div>
+      <p class="muted small" id="edit-warning" hidden>Bırakma tarihini değiştirmek rozetleri yeni tarihe göre yeniden hesaplar.</p>
+      <button class="btn btn-primary" type="submit">Kaydet</button>
+    </form>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>
