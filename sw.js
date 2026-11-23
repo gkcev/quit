@@ -1,5 +1,5 @@
 // Uygulama kabuğunu önbelleğe alır; çevrimdışı da açılır.
-const CACHE = 'quit-v2';
+const CACHE = 'quit-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -25,10 +25,12 @@ self.addEventListener('activate', (event) => {
 });
 
 // Önce ağ, olmazsa önbellek: güncellemeler hemen gelir, çevrimdışı da çalışır.
+// Kendi dosyalarımızda tarayıcının HTTP önbelleği atlanır (GitHub Pages 10 dk önbellekliyor).
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  const sameOrigin = new URL(event.request.url).origin === self.location.origin;
   event.respondWith(
-    fetch(event.request)
+    fetch(event.request, sameOrigin ? { cache: 'no-cache' } : undefined)
       .then((res) => {
         const copy = res.clone();
         caches.open(CACHE).then((cache) => cache.put(event.request, copy));
