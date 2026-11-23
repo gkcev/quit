@@ -101,11 +101,10 @@ function escapeHtml(text) {
 function renderHome() {
   const p = progress();
   const future = p.elapsed < 0;
-  const { d, h, m, s } = splitDuration(p.elapsed);
+  const { d, h } = splitDuration(p.elapsed);
 
   $('#timer-label').textContent = future ? 'Bırakmana kalan süre' : 'Sigarasız geçen süre';
-  $('#timer-1').textContent = `${d} gün ${h} sa`;
-  $('#timer-2').textContent = `${m} dk ${String(s).padStart(2, '0')} sn`;
+  $('#timer').textContent = `${d} gün ${h} sa`;
 
   $('#stat-cigs').textContent = integer.format(p.cigs);
   $('#stat-money').textContent = money.format(p.saved);
